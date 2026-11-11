@@ -1,0 +1,98 @@
+@import "tailwindcss";
+
+/*
+ * RADIANT HEALTH CLUB: DESIGN TOKENS
+ * Source of truth for the design system (see the Step 2 document).
+ * Tokens marked PROVISIONAL will be tuned after the photo analysis.
+ * Change a value here and every component updates.
+ */
+@theme {
+  /* ---- Color ---- */
+  --color-ink-950: #0d0c0a; /* PROVISIONAL: primary dark background */
+  --color-ink-900: #16140f;
+  --color-ink-700: #2b2822;
+  --color-stone-500: #7a7468;
+  --color-stone-300: #c9c2b5;
+  --color-sand-100: #ede6da;
+  --color-ivory-50: #f8f4ec;
+  --color-champagne-200: #e6d5ae;
+  --color-champagne-400: #c8a96a; /* PROVISIONAL: accent on dark */
+  --color-champagne-600: #8c6d32; /* PROVISIONAL: accent text on light */
+  --color-success: #4e7a5b;
+  --color-error: #a8423a;
+
+  /* ---- Typography (PROVISIONAL families) ---- */
+  --font-serif: "Cormorant Garamond", "Cormorant", Georgia, serif;
+  --font-sans: "Manrope Variable", "Manrope", system-ui, sans-serif;
+
+  /* Fluid sizes: min on mobile, max on desktop (clamp). */
+  --text-display: clamp(2.75rem, 1.5rem + 5.2vw, 5.5rem);
+  --text-display--line-height: 1.02;
+  --text-h1: clamp(2.375rem, 1.4rem + 3.8vw, 4rem);
+  --text-h1--line-height: 1.08;
+  --text-h2: clamp(1.875rem, 1.4rem + 1.9vw, 2.75rem);
+  --text-h2--line-height: 1.15;
+  --text-h3: clamp(1.5rem, 1.3rem + 0.8vw, 1.875rem);
+  --text-h3--line-height: 1.2;
+  --text-lead: clamp(1.125rem, 1.07rem + 0.25vw, 1.25rem);
+  --text-lead--line-height: 1.65;
+  --text-label: 0.75rem;
+  --text-label--line-height: 1.4;
+  --text-label--letter-spacing: 0.18em;
+  --text-label--font-weight: 600;
+
+  /* ---- Motion ---- */
+  --ease-luxe: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* ---- Elevation (hairlines first, one soft shadow for floating UI) ---- */
+  --shadow-float: 0 24px 60px -24px rgb(13 12 10 / 0.45);
+
+  /* ---- Layout ---- */
+  --container-wide: 100rem; /* 1600px */
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem; /* sticky header offset for anchor links */
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3 {
+    font-family: var(--font-serif);
+    font-weight: 300;
+    letter-spacing: -0.01em;
+  }
+  ::selection { background: var(--color-champagne-200); color: var(--color-ink-950); }
+
+  /* Visible focus everywhere. Never remove; adjust the colour per surface instead. */
+  :focus-visible {
+    outline: 2px solid var(--color-champagne-400);
+    outline-offset: 3px;
+  }
+}
+
+/* Respect users who ask for less motion. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Slow, almost imperceptible push-in for the hero image (one orchestrated moment). */
+@keyframes slow-zoom {
+  from { transform: scale(1); }
+  to { transform: scale(1.08); }
+}
+@utility animate-slow-zoom {
+  animation: slow-zoom 24s var(--ease-luxe) both;
+}
